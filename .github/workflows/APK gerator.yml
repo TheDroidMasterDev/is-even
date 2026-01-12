@@ -1,0 +1,39 @@
+name: Gerador de APK - Is-Even Torture Edition
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: # Permite rodar manualmente
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v3
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Gerar o Monstro de 30.000 linhas
+      run: |
+        node generator.js
+        echo "O arquivo is-even.js foi gerado com sucesso."
+
+    - name: Build APK (Simulação de Compilação)
+      run: |
+        # Aqui o Buildozer entraria em ação. 
+        # Como o Buildozer demora horas, podemos simular o empacotamento 
+        # ou usar um template de WebView para Android.
+        mkdir build
+        echo "Empacotando perguntas do Beethoven e 30k else-ifs..." > build/log.txt
+        cp is-even.js build/
+
+    - name: Upload do Artefato
+      uses: actions/upload-artifact@v3
+      with:
+        name: is-even-torture-apk
+        path: build/
