@@ -3,7 +3,7 @@ name: Gerador de APK - Is-Even Torture Edition
 on:
   push:
     branches: [ main ]
-  workflow_dispatch: # Permite rodar manualmente
+  workflow_dispatch:
 
 jobs:
   build:
@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - name: Checkout do código
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4  # <--- Atualizado!
 
     - name: Configurar Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4 # <--- Atualizado para garantir
       with:
         node-version: 18
 
@@ -25,15 +25,14 @@ jobs:
 
     - name: Build APK (Simulação de Compilação)
       run: |
-        # Aqui o Buildozer entraria em ação. 
-        # Como o Buildozer demora horas, podemos simular o empacotamento 
-        # ou usar um template de WebView para Android.
-        mkdir build
+        mkdir -p build
         echo "Empacotando perguntas do Beethoven e 30k else-ifs..." > build/log.txt
+        # Se você já tem o código do APK, ele seria copiado aqui
         cp is-even.js build/
 
     - name: Upload do Artefato
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4 # <--- O culpado do erro era esse!
       with:
-        name: is-even-torture-apk
+        name: is-even-torture-package
         path: build/
+        
