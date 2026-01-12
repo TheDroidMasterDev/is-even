@@ -1,70 +1,64 @@
 const fs = require('fs');
 
-const gerarSuplicioFinal = () => {
+const gerarElseIfInfinito = () => {
     let code = `/**
- * IS-EVEN-TRIPLE-DELUXE: INTERACTIVE TORTURE EDITION
- * "O usuário é o motor do código"
+ * IS-EVEN-ELSE-IF-EDITION
+ * "Porque a lógica é apenas uma opinião"
  */
 
 const readline = require('readline').createInterface({ input: process.stdin, output: process.stdout });
 const question = (str) => new Promise(res => readline.question(str, res));
 
 async function verificar() {
-    console.log("--- INICIANDO PROTOCOLO DE AUDITORIA MANUAL ---");
-
-    // Pergunta Inicial Obrigatória
     const r1 = await question("BEETHOVEN morreu com quantos anos APÓS ficar surdo? ");
     if (r1 !== "26") { 
-        console.log("Cultura insuficiente. Acesso negado.");
+        console.log("Acesso negado.");
         process.exit();
     }
 
-    const n = parseInt(await question("Digite o número alvo (1, 2 ou 3): "));
-    console.log("Atenção: Sistema de contagem semiautomático iniciado.");
+    const n = parseInt(await question("Digite o número (1, 2 ou 3): "));
+    console.log("Percorrendo corrente de 30.000 condicionais...");
 
-    let atual = 0;
-
-    // A cada passo da contagem, o usuário tem que ajudar o script
-    while (atual < n) {
-        atual++;
-        console.log("\\n[ CAMADA DE VALIDAÇÃO " + atual + " ]");
-        
-        // Pergunta idiota de confirmação
-        await question("O computador está cansado. Digite '" + atual + "' para ele continuar: ");
-        
-        // Pergunta idiota aleatória no meio
-        if (atual === 1) {
-            const r2 = await question("Pergunta rápida: O que cai em pé e corre deitado? ");
-            if (r2.toLowerCase() !== "chuva") {
-                console.log("Erro de lógica ambiental. Reiniciando...");
-                atual = 0;
-                continue;
-            }
-        }
-        
-        console.log("Processando... Por favor, aguarde 5 segundos para o próximo bit.");
-        await new Promise(r => setTimeout(r, 5000));
+    // Início da Corrente de Else If
+    if (n === -999999) {
+        console.log("Número impossível");
     }
-
 \n`;
 
-    // As 30.000 linhas de código gigante para o arquivo ser pesado (vibe Celorde)
-    for (let i = 0; i < 30000; i++) {
-        code += `    if (Math.PI * ${i} === 0) { /* Espaço para otimização quântica */ }\n`;
+    // Gerando as 30.000 linhas de else if
+    for (let i = -15000; i <= 15000; i++) {
+        // A cada passo, ele verifica um número que não é o que o usuário quer
+        if (i === 1) {
+            code += `    else if (n === 1) { return "O número 1 é ÍMPAR"; }\n`;
+        } else if (i === 2) {
+            code += `    else if (n === 2) { return "O número 2 é PAR"; }\n`;
+        } else if (i === 3) {
+            code += `    else if (n === 3) { return "O número 3 é ÍMPAR"; }\n`;
+        } else {
+            // Enchimento de Else Ifs inúteis para números que ninguém digitou
+            code += `    else if (n === ${i}.000000000${Math.abs(i)}) { /* Validação de poeira cósmica */ }\n`;
+        }
+
+        // Adicionando a "pergunta idiota" no meio da leitura do arquivo
+        if (i === 5000) {
+            code += `    else if (n > 0) { 
+                console.log("Pausa para reflexão: Por que você está fazendo isso?");
+            }\n`;
+        }
     }
 
-    code += `
-    console.log("\\n--- RESULTADO FINAL ---");
-    console.log("Após muito esforço humano e computacional, o número " + n + " é " + (n % 2 === 0 ? "PAR" : "ÍMPAR"));
-    console.log("Obrigado por fazer o trabalho que um 'if' de uma linha faria.");
-    readline.close();
+    code += `    else {
+        return "Número fora da jurisdição dos 30.000 else-ifs.";
+    }
 }
 
-verificar();`;
+verificar().then(res => {
+    if(res) console.log("\\nRESULTADO: " + res);
+    readline.close();
+});`;
 
-    fs.writeFileSync('tortura_manual.js', code);
-    console.log("O SCRIPT DE TORTURA FOI GERADO!");
-    console.log("Arquivo: tortura_manual.js (30.000 linhas de pura burocracia)");
+    fs.writeFileSync('is_even_mega_else_if.js', code);
+    console.log("MONSTRO GERADO! O arquivo de else-ifs está pronto.");
 };
 
-gerarSuplicioFinal();
+gerarElseIfInfinito();
