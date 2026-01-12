@@ -1,0 +1,47 @@
+name: Release do Suplicio - Is-Even Torture
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Necessário para criar a Release
+
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v4
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Validar o index.js Gigante
+      run: |
+        node index.js || echo "O script rodou (ou pelo menos tentou responder o Beethoven)"
+        mkdir -p dist
+        # O arquivo que as pessoas vão baixar
+        cp index.js dist/is-even-ultimate-edition.js
+        echo "Cultura exigida: Beethoven (26 anos após surdez)" > dist/LEIA-ME.txt
+
+    - name: Criar Release Oficial
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v1.0.${{ github.run_number }}
+        name: Release v1.0.${{ github.run_number }} - The Beethoven Update
+        body: |
+          ### 🚀 Novidades desta versão:
+          * Adicionadas 30.000 linhas de pura eficiência (SQN).
+          * Sistema de validação cultural via Beethoven.
+          * Suporte exclusivo para os números 1, 2 e 3.
+          * Bug fix: O número 4 agora é ignorado por ser muito complexo.
+        files: |
+          dist/is-even-ultimate-edition.js
+          dist/LEIA-ME.txt
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
